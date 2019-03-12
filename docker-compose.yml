@@ -12,6 +12,7 @@ services:
       - ./data/repo:/var/repo
       - ./data/file:/var/storage
       - ./config/ph/mailers.json:/phapp/mailers.json
+      - ./config/ph/preamble.php:/phapp/phabricator/support/preamble.php
     env_file: ./config/ph/ph.env
 
   nginx:

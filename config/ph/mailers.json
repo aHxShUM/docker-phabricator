@@ -1,0 +1,13 @@
+[
+  {
+    "key": "smtp",
+    "type": "smtp",
+    "options": {
+      "host": "mailserver",
+      "port": 587,
+      "user": "user@mailserver",
+      "password": "userpass",
+      "protocol": "tls"
+    }
+  }
+]

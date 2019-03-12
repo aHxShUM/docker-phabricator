@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+
+  ph-fpm:
+    build:
+      context: ./dockerfile/ph-fpm
+    depends_on:
+      - db
+    volumes:
+      - ./config/ph/php-ph-config.ini:/usr/local/etc/php/conf.d/ph.ini
+      - ./data/repo:/var/repo
+      - ./data/file:/var/storage
+      - ./config/ph/mailers.json:/phapp/mailers.json
+    env_file: ./config/ph/ph.env
+
+  nginx:
+    image: nginx:alpine
+    depends_on:
+      - ph-fpm
+    ports:
+      - 8000:80
+    volumes:
+      - ./config/nginx/ph.conf:/etc/nginx/conf.d/default.conf
+
+  db:
+    image: mysql:5.7
+    command: --sql-mode="STRICT_ALL_TABLES"
+    environment:
+      MYSQL_ROOT_PASSWORD: phabricator
+    volumes:
+      - ./data/db:/var/lib/mysql
